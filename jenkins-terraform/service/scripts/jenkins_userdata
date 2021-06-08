@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#for installing jenkins
+apt-get update -y
+apt-get install openjdk-8-jdk openjdk-8-jre -y
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+apt install jenkins -y
+systemctl start jenkins
+systemctl status jenkins
+systemctl enable jenkins
+
+
+#for generating the model
+apt install python3-pip -y
+pip3 install pandas
+pip3 install scikit-learn==0.20.2
+
+#for copying model to s3
+apt  install awscli -y
+
+#for serverless framework
+apt install curl -y
+curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
+bash nodesource_setup.sh
+apt-get install -y nodejs
+nodejs -v
+npm -v
+npm install -g serverless
+
+
+# for installing terraform
+wget https://releases.hashicorp.com/terraform/0.14.11/terraform_0.14.11_linux_amd64.zip
+apt install unzip
+unzip terraform_0.14.11_linux_amd64.zip
+mv terraform /usr/local/bin
+
+cat /var/lib/jenkins/secrets/initialAdminPassword
+
